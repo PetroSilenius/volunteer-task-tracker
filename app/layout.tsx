@@ -32,15 +32,17 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${inter.className} dark`}>
-          <div className="flex justify-between p-2">
+          <div className="flex justify-between p-2 h-12 border-b">
             <Link href="/">Home</Link>
             <Link href={statsLink}>Stats</Link>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
+            <div className="h-8 w-8">
+              <SignedIn>
+                {<UserButton afterSignOutUrl="/" />}
+              </SignedIn>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+            </div>
           </div>
           {children}
         </body>
