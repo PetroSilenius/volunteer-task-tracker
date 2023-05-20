@@ -100,6 +100,7 @@ export default async function Stats({
             icon={<DollarSign className="h-4 w-4" />}
             stat={currentMonthStats.revenue}
             previousStat={lastMonthStats.revenue}
+            isCurrency={true}
           />
           <StatCard
             title="Total Amount"
@@ -110,14 +111,14 @@ export default async function Stats({
 
           <StatCard
             title="Total tasks completed"
-            icon={<Users className="h-4 w-4" />}
+            icon={<Activity className="h-4 w-4" />}
             stat={currentMonthData.rowCount}
             previousStat={lastMonthData.rowCount}
           />
 
           <StatCard
             title="Unique volunteers"
-            icon={<Activity className="h-4 w-4" />}
+            icon={<Users className="h-4 w-4" />}
             stat={currentMonthStats.uniqueActiveUsers}
             previousStat={lastMonthStats.uniqueActiveUsers}
           />

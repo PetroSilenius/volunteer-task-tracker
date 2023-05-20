@@ -19,10 +19,12 @@ export default async function Confirm({
       throw new Error("You must be signed in to complete a task.");
     }
 
+    const revenueInCents = Number(formData.get("revenue")) * 100;
+
     await sql`
       UPDATE tasks
       SET completed_date = ${formData.get("completed_date") as string},
-          revenue = ${Number(formData.get("revenue"))},
+          revenue = ${revenueInCents},
           amount = ${Number(formData.get("amount"))}
       WHERE id = ${taskId} AND user_id = ${userId}
     `;
@@ -41,7 +43,7 @@ export default async function Confirm({
         <Label htmlFor="completed_date">Completion date</Label>
         <Input name="completed_date" type="date" />
         <Label htmlFor="revenue">Revenue</Label>
-        <Input name="revenue" type="number" />
+        <Input name="revenue" pattern="^\d+(?:[.,]\d{1,2})?\s*€?$" />
         <Label htmlFor="amount">Amount</Label>
         <Input name="amount" type="number" />
         <Button type="submit">Submit</Button>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { formatCurrency } from "@/lib/currency";
 
 function calculateMonthlyRevenue(yearData: Task[]) {
   const monthlyRevenue = [];
@@ -52,7 +53,7 @@ export function YearGraph({ yearData }: { yearData: Task[] }) {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => formatCurrency(value)}
         />
         <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
       </BarChart>

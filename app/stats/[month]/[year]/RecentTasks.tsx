@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getCompletedTasksForMonth } from "@/lib/db";
 import { getUserName } from "@/lib/user";
+import { formatCurrency } from "@/lib/currency";
 
 export async function RecentTasks({ month }: { month: Date }) {
   const { rows: recentTasks } = await getCompletedTasksForMonth(month);
@@ -18,7 +19,7 @@ export async function RecentTasks({ month }: { month: Date }) {
               {getUserName(task.user_id)}
             </p>
           </div>
-          <div className="ml-auto font-medium">{task.revenue}</div>
+          <div className="ml-auto font-medium">{formatCurrency(task.revenue)}</div>
           <div className="ml-auto font-medium">
             {task.completed_date?.toLocaleDateString("fi-fi")}
           </div>
