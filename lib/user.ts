@@ -8,3 +8,9 @@ export const getUserName = async (userId: string, onlyInitials: boolean = false)
 
   return user.firstName + " " + user.lastName;
 };
+
+export const getUser = async (userId: string) => {
+  const user = await clerkClient.users.getUser(userId);
+  
+  return user;
+};
