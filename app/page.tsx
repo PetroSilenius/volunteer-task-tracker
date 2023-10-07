@@ -9,11 +9,12 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { getPlannedTasksForYear } from "@/lib/db";
-import { getUserName } from "@/lib/user";
+import { getUserName, getAllUsers } from "@/lib/user";
 import { auth } from "@clerk/nextjs";
 
 export default async function Home() {
   const { rows: tasks } = await getPlannedTasksForYear(new Date());
+  const users = await getAllUsers();
 
   const { userId } = auth();
 
@@ -41,7 +42,9 @@ export default async function Home() {
               <TableCell>
                 {task.planned_date.toLocaleDateString("fi-fi")}
               </TableCell>
-              <TableCell>{getUserName(task.user_id)}</TableCell>
+              <TableCell>
+                {getUserName(users.find((u) => u.id === task.user_id))}
+              </TableCell>
               <TableCell className="text-right">
                 {task.completed_date ? (
                   "✅"

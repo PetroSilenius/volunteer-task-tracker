@@ -1,8 +1,7 @@
-import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient, type User } from "@clerk/nextjs/server";
 
-export const getUserName = async (userId: string, onlyInitials: boolean = false) => {
-  const user = await clerkClient.users.getUser(userId);
-
+export const getUserName = (user?: User, onlyInitials: boolean = false) => {
+  if (!user) return "";
   if (onlyInitials && user.firstName)
     return user.firstName?.[0] + user.lastName?.[0];
 
@@ -14,3 +13,9 @@ export const getUser = async (userId: string) => {
   
   return user;
 };
+
+export const getAllUsers = async () => {
+  const users = await clerkClient.users.getUserList();
+
+  return users;
+}

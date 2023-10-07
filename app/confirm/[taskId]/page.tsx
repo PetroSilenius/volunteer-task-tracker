@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getTaskById } from "@/lib/db";
 import { getUserName } from "@/lib/user";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { drive, auth as gauth } from "@googleapis/drive";
@@ -18,11 +18,11 @@ export default async function Confirm({
   async function confirmTaskDone(formData: FormData) {
     "use server";
 
-    const { userId } = auth();
-    if (!userId) {
+    const user = await currentUser();
+    if (!user) {
       throw new Error("You must be signed in to complete a task.");
     }
-    const userName = await getUserName(userId);
+    const userName = getUserName(user);
 
     const googleAuth = new gauth.GoogleAuth({
       credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS ?? ""),
@@ -58,7 +58,7 @@ export default async function Confirm({
       SET completed_date = ${completedDate},
           revenue = ${revenueInCents},
           amount = ${Number(formData.get("amount"))}
-      WHERE id = ${taskId} AND user_id = ${userId}
+      WHERE id = ${taskId} AND user_id = ${user.id}
     `;
     revalidatePath("/");
     redirect("/");
