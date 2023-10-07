@@ -8,6 +8,7 @@ import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
 import { drive, auth as gauth } from "@googleapis/drive";
 import stream from "stream";
+import { revalidatePath } from "next/cache";
 
 export default async function Confirm({
   params: { taskId },
@@ -59,6 +60,7 @@ export default async function Confirm({
           amount = ${Number(formData.get("amount"))}
       WHERE id = ${taskId} AND user_id = ${userId}
     `;
+    revalidatePath("/");
     redirect("/");
   }
 
