@@ -5,6 +5,8 @@ import { getTaskById } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
+import { drive, auth as gauth } from "@googleapis/drive";
+import stream from "stream";
 
 export default async function Confirm({
   params: { taskId },
@@ -14,10 +16,36 @@ export default async function Confirm({
   async function confirmTaskDone(formData: FormData) {
     "use server";
 
-    const { userId } = auth();
+    const { userId, user } = auth();
     if (!userId) {
       throw new Error("You must be signed in to complete a task.");
     }
+
+    const googleAuth = new gauth.GoogleAuth({
+      credentials: JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS ?? ""),
+      scopes: ["https://www.googleapis.com/auth/drive.file"],
+    });
+
+    const driveInstance = drive({
+      version: "v3",
+      auth: googleAuth,
+    });
+
+    const file = formData.get("file") as File;
+
+    await driveInstance.files.create({
+      requestBody: {
+        name: `${user?.firstName} - ${task.planned_date.toLocaleDateString(
+          "fi-fi"
+        )}`,
+        parents: [process.env.DRIVE_FOLDER_ID ?? ""],
+        mimeType: file.type,
+      },
+      media: {
+        mimeType: file.type,
+        body: stream.Readable.from(Buffer.from(await file.arrayBuffer())),
+      },
+    });
 
     const revenueInCents = Number(formData.get("revenue")) * 100;
 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.18.2",
+    "@googleapis/drive": "^5.1.0",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-label": "^2.0.1",
     "@radix-ui/react-popover": "^1.0.5",
