@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { getTaskById } from "@/lib/db";
 import { getUserName } from "@/lib/user";
 import { currentUser } from "@clerk/nextjs";
@@ -72,10 +73,11 @@ export default async function Confirm({
       <p>Planned date: {task.planned_date.toLocaleDateString("fi-fi")}</p>
       <form action={confirmTaskDone} className="flex flex-col gap-4 my-8">
         <Label htmlFor="file">Upload receipt</Label>
-        <Input name="file" type="file" required={true} />
+        <Input name="file" id="file" type="file" required={true} />
         <Label htmlFor="completed_date">Completion date</Label>
         <Input
           name="completed_date"
+          id="completed_date"
           type="date"
           required={true}
           defaultValue={new Date().toLocaleDateString("en-CA")}
@@ -83,11 +85,23 @@ export default async function Confirm({
         <Label htmlFor="revenue">Revenue</Label>
         <Input
           name="revenue"
+          id="revenue"
           pattern="^\d+(?:[.,]\d{1,2})?\s*€?$"
           required={true}
         />
         <Label htmlFor="amount">Amount</Label>
-        <Input name="amount" type="number" required={true} />
+        <Input name="amount" id="amount" type="number" required={true} />
+
+        <div className="flex gap-2">
+          <Checkbox id="equipment" required={true} />
+          <div className="flex flex-col">
+            <Label htmlFor="equipment">I have returned the equipment</Label>
+            <p className="text-sm text-muted-foreground">
+              Or I have agreed to return them later on
+            </p>
+          </div>
+        </div>
+
         <Button type="submit" className="px-8 mx-auto">
           Submit
         </Button>
