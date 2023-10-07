@@ -10,9 +10,12 @@ import {
 import Link from "next/link";
 import { getPlannedTasksForYear } from "@/lib/db";
 import { getUserName } from "@/lib/user";
+import { auth } from "@clerk/nextjs";
 
 export default async function Home() {
   const { rows: tasks } = await getPlannedTasksForYear(new Date());
+
+  const { userId } = auth();
 
   return (
     <main>
@@ -27,7 +30,14 @@ export default async function Home() {
         </TableHeader>
         <TableBody>
           {tasks.map((task: Task) => (
-            <TableRow key={task.id}>
+            <TableRow
+              key={task.id}
+              data-state={
+                userId === task.user_id && !task.completed_date
+                  ? "selected"
+                  : ""
+              }
+            >
               <TableCell>
                 {task.planned_date.toLocaleDateString("fi-fi")}
               </TableCell>
