@@ -39,7 +39,7 @@ function calculateMonthlyRevenue(yearData: Task[]) {
 export function YearGraph({ yearData }: { yearData: Task[] }) {
   const data = calculateMonthlyRevenue(yearData);
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer width="95%" height={350}>
       <BarChart data={data}>
         <XAxis
           dataKey="name"

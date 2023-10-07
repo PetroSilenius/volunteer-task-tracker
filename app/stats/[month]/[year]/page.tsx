@@ -69,7 +69,7 @@ export default async function Stats({
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between space-y-2">
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <Link
               href={`/stats/${
                 previousMonth.getMonth() + 1
@@ -123,8 +123,8 @@ export default async function Stats({
             previousStat={lastMonthStats.uniqueActiveUsers}
           />
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
+        <div className="grid gap-4 md:grid-cols-5 lg:grid-cols-7">
+          <Card className="md:col-span-3 lg:col-span-4">
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
@@ -132,12 +132,11 @@ export default async function Stats({
               <YearGraph yearData={yearData} />
             </CardContent>
           </Card>
-          <Card className="col-span-3">
+          <Card className="md:col-span-2 lg:col-span-3">
             <CardHeader>
               <CardTitle>Recent task completions</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* @ts-expect-error Server Component */}
               <RecentTasks month={currentMonth} />
             </CardContent>
           </Card>

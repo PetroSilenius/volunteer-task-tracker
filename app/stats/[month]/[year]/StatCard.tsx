@@ -22,7 +22,7 @@ export function StatCard({
   icon,
   stat,
   previousStat,
-  isCurrency = false
+  isCurrency = false,
 }: {
   title: string;
   icon: React.ReactNode;
@@ -37,7 +37,9 @@ export function StatCard({
         <span className="text-muted-foreground">{icon}</span>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{isCurrency ? formatCurrency(stat) : stat}</div>
+        <div className="text-2xl font-bold">
+          {isCurrency ? formatCurrency(stat) : stat}
+        </div>
         <p className="text-xs text-muted-foreground">
           {compareMetrics(stat, previousStat)}
         </p>

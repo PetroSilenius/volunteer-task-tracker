@@ -19,7 +19,9 @@ export async function RecentTasks({ month }: { month: Date }) {
               {getUserName(task.user_id)}
             </p>
           </div>
-          <div className="ml-auto font-medium">{formatCurrency(task.revenue)}</div>
+          <div className="ml-auto font-medium">
+            {formatCurrency(task.revenue)}
+          </div>
           <div className="ml-auto font-medium">
             {task.completed_date?.toLocaleDateString("fi-fi")}
           </div>
