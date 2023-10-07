@@ -12,24 +12,19 @@ export async function RecentTasks({ month }: { month: Date }) {
       {recentTasks.slice(-5).map((task) => {
         const user = users.find((u) => u.id === task.user_id);
         return (
-        <div className="flex items-center" key={task.id}>
-          <Avatar className="h-9 w-9">
-            <AvatarImage src={user?.imageUrl} alt="Avatar" />
-            <AvatarFallback>{getUserName(user, true)}</AvatarFallback>
-          </Avatar>
-          <div className="ml-4 space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {getUserName(user)}
-            </p>
+          <div className="flex items-center gap-2 font-medium" key={task.id}>
+            <Avatar className="h-9 w-9 md:hidden lg:flex">
+              <AvatarImage src={user?.imageUrl} alt="Avatar" />
+              <AvatarFallback>{getUserName(user, true)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="text-sm leading-none">{getUserName(user)}</p>
+            </div>
+            <div>{formatCurrency(task.revenue)}</div>
+            <div>{task.completed_date?.toLocaleDateString("fi-fi")}</div>
           </div>
-          <div className="ml-auto font-medium">
-            {formatCurrency(task.revenue)}
-          </div>
-          <div className="ml-auto font-medium">
-            {task.completed_date?.toLocaleDateString("fi-fi")}
-          </div>
-        </div>
-)})}
+        );
+      })}
     </div>
   );
 }
