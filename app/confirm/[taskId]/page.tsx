@@ -17,11 +17,14 @@ export default async function Confirm({
 }: {
   params: { taskId: string };
 }) {
+  const { rows } = await getTaskById(Number(taskId));
+  const task = rows[0];
+
   async function confirmTaskDone(formData: FormData) {
     "use server";
 
     const user = await currentUser();
-    if (!user) {
+    if (!user || user.id !== task.user_id) {
       throw new Error("You must be signed in to complete a task.");
     }
     const userName = getUserName(user);
@@ -39,7 +42,7 @@ export default async function Confirm({
     const file = formData.get("file") as File;
     const completedDate = formData.get("completed_date") as string;
 
-    await driveInstance.files.create({
+    driveInstance.files.create({
       requestBody: {
         name: `${userName} - ${new Date(completedDate).toLocaleDateString(
           lang.localeDateFormat
@@ -62,12 +65,11 @@ export default async function Confirm({
           amount = ${Number(formData.get("amount"))}
       WHERE id = ${taskId} AND user_id = ${user.id}
     `;
+
     revalidatePath("/");
+    revalidatePath("/stats/[month]/[year]");
     redirect("/");
   }
-
-  const { rows } = await getTaskById(Number(taskId));
-  const task = rows[0];
 
   return (
     <main className="px-4 pt-2">
