@@ -12,8 +12,8 @@ const sendTaskReminder = async (task: Task, hostUrl: string) => {
 
   const msg: MailDataRequired = {
     to: user.emailAddresses[0].emailAddress,
-    from: 'pullot@halsi.fi',
-    templateId: "d-051535f90af34ec8b073aecfa4b67174",
+    from: process.env.SENDGRID_SENDER_ADDRESS ?? '',
+    templateId: process.env.SENDGRID_TEMPLATE_ID ?? '',
     dynamicTemplateData: {
       first_name: user.firstName,
       confirm_url: `${hostUrl}/confirm/${task.id}`
