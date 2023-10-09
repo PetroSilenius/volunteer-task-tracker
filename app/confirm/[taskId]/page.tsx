@@ -42,7 +42,7 @@ export default async function Confirm({
     await driveInstance.files.create({
       requestBody: {
         name: `${userName} - ${new Date(completedDate).toLocaleDateString(
-          "fi-fi"
+          lang.localeDateFormat
         )}`,
         parents: [process.env.DRIVE_FOLDER_ID ?? ""],
         mimeType: file.type,
@@ -71,7 +71,10 @@ export default async function Confirm({
 
   return (
     <main className="px-4 pt-2">
-      <p>{lang.confirm.plannedDate}: {task.planned_date.toLocaleDateString("fi-fi")}</p>
+      <p>
+        {lang.confirm.plannedDate}:{" "}
+        {task.planned_date.toLocaleDateString(lang.localeDateFormat)}
+      </p>
       <form action={confirmTaskDone} className="flex flex-col gap-4 my-8">
         <Label htmlFor="file">{lang.confirm.uploadFile}</Label>
         <Input name="file" id="file" type="file" required={true} />
@@ -98,7 +101,7 @@ export default async function Confirm({
           <div className="flex flex-col">
             <Label htmlFor="equipment">{lang.confirm.returnedEquipment}</Label>
             <p className="text-sm text-muted-foreground">
-            {lang.confirm.returnedEquipmentDescription}
+              {lang.confirm.returnedEquipmentDescription}
             </p>
           </div>
         </div>

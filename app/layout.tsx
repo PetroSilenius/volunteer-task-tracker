@@ -8,6 +8,7 @@ import {
 } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import Image from "next/image";
 import lang from "@/dictionaries/lang.json";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +30,12 @@ export default function RootLayout({
       <html lang={lang.htmlLang}>
         <body className={`${inter.className} dark`}>
           <header className="flex justify-between items-center px-4 h-12 border-b">
-            <Link href="/">{lang.header.title}</Link>
+            <Link href="/" className="flex items-center gap-4">
+              {lang.squareLogo && (
+                <Image src={lang.squareLogo} height="32" width="32" alt="" />
+              )}
+              {lang.header.title}
+            </Link>
             <Link href={statsLink}>{lang.header.stats}</Link>
             <div className="h-8 w-8">
               <SignedIn>{<UserButton afterSignOutUrl="/" />}</SignedIn>

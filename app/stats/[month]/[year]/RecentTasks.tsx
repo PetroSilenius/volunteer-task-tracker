@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getCompletedTasksForMonth } from "@/lib/db";
 import { getUserName, getAllUsers } from "@/lib/user";
 import { formatCurrency } from "@/lib/currency";
+import lang from "@/dictionaries/lang.json";
 
 export async function RecentTasks({ month }: { month: Date }) {
   const { rows: recentTasks } = await getCompletedTasksForMonth(month);
@@ -21,7 +22,9 @@ export async function RecentTasks({ month }: { month: Date }) {
               <p className="text-sm leading-none">{getUserName(user)}</p>
             </div>
             <div>{formatCurrency(task.revenue)}</div>
-            <div>{task.completed_date?.toLocaleDateString("fi-fi")}</div>
+            <div>
+              {task.completed_date?.toLocaleDateString(lang.localeDateFormat)}
+            </div>
           </div>
         );
       })}
