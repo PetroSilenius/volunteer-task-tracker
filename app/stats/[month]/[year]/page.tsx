@@ -13,6 +13,7 @@ import { YearGraph } from "./YearGraph";
 import Link from "next/link";
 import { getCompletedTasksForMonth, getCompletedTasksForYear } from "@/lib/db";
 import { StatCard } from "./StatCard";
+import lang from "@/dictionaries/lang.json";
 
 function calculateTaskStats(tasks: Task[]) {
   const stats = {
@@ -68,7 +69,7 @@ export default async function Stats({
     <div className="flex-col flex">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
+          <h2 className="text-3xl font-bold tracking-tight">{lang.stats.dashboard}</h2>
           <div className="flex items-center gap-2">
             <Link
               href={`/stats/${
@@ -96,28 +97,28 @@ export default async function Stats({
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            title="Total Revenue"
+            title={lang.stats.totalRevenue}
             icon={<DollarSign className="h-4 w-4" />}
             stat={currentMonthStats.revenue}
             previousStat={lastMonthStats.revenue}
             isCurrency={true}
           />
           <StatCard
-            title="Total Amount"
+            title={lang.stats.totalAmount}
             icon={<CreditCard className="h-4 w-4" />}
             stat={currentMonthStats.amount}
             previousStat={lastMonthStats.amount}
           />
 
           <StatCard
-            title="Total tasks completed"
+            title={lang.stats.totalTasks}
             icon={<Activity className="h-4 w-4" />}
             stat={currentMonthData.rowCount}
             previousStat={lastMonthData.rowCount}
           />
 
           <StatCard
-            title="Unique volunteers"
+            title={lang.stats.uniqueAssignees}
             icon={<Users className="h-4 w-4" />}
             stat={currentMonthStats.uniqueActiveUsers}
             previousStat={lastMonthStats.uniqueActiveUsers}
@@ -126,7 +127,7 @@ export default async function Stats({
         <div className="grid gap-4 md:grid-cols-5 lg:grid-cols-7">
           <Card className="md:col-span-3 lg:col-span-4">
             <CardHeader>
-              <CardTitle>Overview</CardTitle>
+              <CardTitle>{lang.stats.overview}</CardTitle>
             </CardHeader>
             <CardContent className="pl-2">
               <YearGraph yearData={yearData} />
@@ -134,7 +135,7 @@ export default async function Stats({
           </Card>
           <Card className="md:col-span-2 lg:col-span-3">
             <CardHeader>
-              <CardTitle>Recent task completions</CardTitle>
+              <CardTitle>{lang.stats.recentCompletions}</CardTitle>
             </CardHeader>
             <CardContent>
               <RecentTasks month={currentMonth} />

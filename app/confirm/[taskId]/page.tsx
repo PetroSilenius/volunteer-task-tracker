@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { drive, auth as gauth } from "@googleapis/drive";
 import stream from "stream";
 import { revalidatePath } from "next/cache";
+import lang from "@/dictionaries/lang.json";
 
 export default async function Confirm({
   params: { taskId },
@@ -70,11 +71,11 @@ export default async function Confirm({
 
   return (
     <main className="px-4 pt-2">
-      <p>Planned date: {task.planned_date.toLocaleDateString("fi-fi")}</p>
+      <p>{lang.confirm.plannedDate}: {task.planned_date.toLocaleDateString("fi-fi")}</p>
       <form action={confirmTaskDone} className="flex flex-col gap-4 my-8">
-        <Label htmlFor="file">Upload receipt</Label>
+        <Label htmlFor="file">{lang.confirm.uploadFile}</Label>
         <Input name="file" id="file" type="file" required={true} />
-        <Label htmlFor="completed_date">Completion date</Label>
+        <Label htmlFor="completed_date">{lang.confirm.completedDate}</Label>
         <Input
           name="completed_date"
           id="completed_date"
@@ -82,28 +83,28 @@ export default async function Confirm({
           required={true}
           defaultValue={new Date().toLocaleDateString("en-CA")}
         />
-        <Label htmlFor="revenue">Revenue</Label>
+        <Label htmlFor="revenue">{lang.confirm.revenue}</Label>
         <Input
           name="revenue"
           id="revenue"
           pattern="^\d+(?:[.,]\d{1,2})?\s*€?$"
           required={true}
         />
-        <Label htmlFor="amount">Amount</Label>
+        <Label htmlFor="amount">{lang.confirm.amount}</Label>
         <Input name="amount" id="amount" type="number" required={true} />
 
         <div className="flex gap-2">
           <Checkbox id="equipment" required={true} />
           <div className="flex flex-col">
-            <Label htmlFor="equipment">I have returned the equipment</Label>
+            <Label htmlFor="equipment">{lang.confirm.returnedEquipment}</Label>
             <p className="text-sm text-muted-foreground">
-              Or I have agreed to return them later on
+            {lang.confirm.returnedEquipmentDescription}
             </p>
           </div>
         </div>
 
         <Button type="submit" className="px-8 mx-auto">
-          Submit
+          {lang.confirm.submit}
         </Button>
       </form>
     </main>

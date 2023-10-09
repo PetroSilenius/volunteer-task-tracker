@@ -1,0 +1,33 @@
+{
+    "htmlLang": "en",
+    "localeDateFormat": "en-us",
+    "header": {
+      "title": "Home",
+      "stats": "Stats"
+    },
+    "taskList": {
+      "caption": "A list of tasks for volunteers",
+      "plannedDate": "Planned date",
+      "assignee": "Assignee",
+      "status": "Status"
+    },
+    "confirm": {
+      "plannedDate": "Planned date",
+      "uploadFile": "Upload receipt",
+      "completedDate": "Completion date",
+      "revenue": "Revenue",
+      "amount": "Amount",
+      "returnedEquipment": "I have returned the equipment",
+      "returnedEquipmentDescription": "Or I have agreed to return them later on",
+      "submit": "Submit"
+    },
+    "stats": {
+      "dashboard": "Dashboard",
+      "totalRevenue": "Total revenue",
+      "totalAmount": "Total amount",
+      "totalTasks": "Total tasks completed",
+      "uniqueAssignees": "Unique assignees",
+      "overview": "Overview",
+      "recentCompletions": "Recent task completions"
+    }
+  }

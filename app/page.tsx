@@ -11,6 +11,7 @@ import Link from "next/link";
 import { getPlannedTasksForYear } from "@/lib/db";
 import { getUserName, getAllUsers } from "@/lib/user";
 import { auth } from "@clerk/nextjs";
+import lang from "@/dictionaries/lang.json";
 
 export default async function Home() {
   const { rows: tasks } = await getPlannedTasksForYear(new Date());
@@ -21,12 +22,12 @@ export default async function Home() {
   return (
     <main>
       <Table>
-        <TableCaption>A list of tasks for volunteers</TableCaption>
+        <TableCaption>{lang.taskList.caption}</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Planned date</TableHead>
-            <TableHead>Assignee</TableHead>
-            <TableHead className="text-right">Status</TableHead>
+            <TableHead>{lang.taskList.plannedDate}</TableHead>
+            <TableHead>{lang.taskList.assignee}</TableHead>
+            <TableHead className="text-right">{lang.taskList.status}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -40,7 +41,7 @@ export default async function Home() {
               }
             >
               <TableCell>
-                {task.planned_date.toLocaleDateString("fi-fi")}
+                {task.planned_date.toLocaleDateString(lang.localeDateFormat)}
               </TableCell>
               <TableCell>
                 {getUserName(users.find((u) => u.id === task.user_id))}
