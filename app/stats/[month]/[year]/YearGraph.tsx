@@ -2,29 +2,24 @@
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import { formatCurrency } from "@/lib/currency";
+import lang from "@/dictionaries/lang.json";
+
+const formatter = new Intl.DateTimeFormat(lang.localeDateFormat, {
+  month: "short",
+});
 
 function calculateMonthlyRevenue(yearData: Task[]) {
   const monthlyRevenue = [];
+  const monthTotals: { [key: string]: number } = {};
 
-  const monthTotals: { [key: string]: number } = {
-    Jan: 0,
-    Feb: 0,
-    Mar: 0,
-    Apr: 0,
-    May: 0,
-    Jun: 0,
-    Jul: 0,
-    Aug: 0,
-    Sep: 0,
-    Oct: 0,
-    Nov: 0,
-    Dec: 0,
-  };
+  for (let month = 0; month < 12; month++) {
+    const date = new Date(new Date().getFullYear(), month, 1);
+    const shortMonthName = formatter.format(date);
+    monthTotals[shortMonthName] = 0;
+  }
 
   for (const task of yearData) {
-    const monthName = new Date(task.completed_date).toLocaleString("en-US", {
-      month: "short",
-    });
+    const monthName = formatter.format(new Date(task.completed_date));
 
     monthTotals[monthName] += task.revenue;
   }

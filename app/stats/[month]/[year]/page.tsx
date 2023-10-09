@@ -69,7 +69,9 @@ export default async function Stats({
     <div className="flex-col flex">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">{lang.stats.dashboard}</h2>
+          <h2 className="text-3xl font-bold tracking-tight">
+            {lang.stats.dashboard}
+          </h2>
           <div className="flex items-center gap-2">
             <Link
               href={`/stats/${
@@ -80,7 +82,7 @@ export default async function Stats({
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             </Link>
-            {currentMonth.toLocaleString("default", {
+            {currentMonth.toLocaleString(lang.localeDateFormat, {
               month: "short",
               year: "2-digit",
             })}
