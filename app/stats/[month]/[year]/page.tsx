@@ -46,6 +46,8 @@ function getMonthDates(month: number, year: number) {
   };
 }
 
+export const revalidate = 0;
+
 export default async function Stats({
   params: { month, year },
 }: {

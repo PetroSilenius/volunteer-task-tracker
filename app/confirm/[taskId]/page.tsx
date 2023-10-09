@@ -12,6 +12,8 @@ import stream from "stream";
 import { revalidatePath } from "next/cache";
 import lang from "@/dictionaries/lang.json";
 
+export const revalidate = 0;
+
 export default async function Confirm({
   params: { taskId },
 }: {

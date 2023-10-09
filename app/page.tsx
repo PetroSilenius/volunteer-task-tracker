@@ -13,6 +13,8 @@ import { getUserName, getAllUsers } from "@/lib/user";
 import { auth } from "@clerk/nextjs";
 import lang from "@/dictionaries/lang.json";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const { rows: tasks } = await getPlannedTasksForYear(new Date());
   const users = await getAllUsers();
